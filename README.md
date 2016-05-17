@@ -49,7 +49,7 @@ module.exports = React.createClass({
 
 ### Template components
 
-Template components are used in rendering the data. These are the type of component that you specify in the url endpoint. The create a new Template Components, make sure to render your component within `mj-body` tags.
+Template components are used in rendering the data. These are the type of component that you specify in the url endpoint. The create a new Template Components, make sure to render your component within `mjml` and `mj-body` tags.
 
 ```javascript
 const React = require('react');
@@ -67,25 +67,27 @@ module.exports = React.createClass({
 
   render() {
     return (
-      <mj-body>
-        <Header name={this.props.name} />
-
-        <mj-section>
-          <mj-column>
-
-            <mj-divider border-color={style.colors.tertiary}></mj-divider>
-
-            <mj-text font-size="20px" color="#F45E43" font-family="helvetica">
-              {this.props.body}
-            </mj-text>
-
-            <mj-button background-color={style.colors.secondary} href={this.props.href}>Go now!</mj-button>
-
-          </mj-column>
-        </mj-section>
-
-        <Footer />
-      </mj-body>
+      <mjml>
+        <mj-body>
+          <Header name={this.props.name} />
+  
+          <mj-section>
+            <mj-column>
+  
+              <mj-divider border-color={style.colors.tertiary}></mj-divider>
+  
+              <mj-text font-size="20px" color="#F45E43" font-family="helvetica">
+                {this.props.body}
+              </mj-text>
+  
+              <mj-button background-color={style.colors.secondary} href={this.props.href}>Go now!</mj-button>
+  
+            </mj-column>
+          </mj-section>
+  
+          <Footer />
+        </mj-body>
+      </mjml>
     );
   }
 });
