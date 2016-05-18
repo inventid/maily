@@ -8,8 +8,6 @@ const log = (level, message) => {
   console.log(JSON.stringify({level,message, datetime: (new Date()).toISOString()}));
 };
 
-const onReady = () => {
-  console.log(JSON.stringify({level: 'info', message: 'Server is ready'}));
-};
+const onReady = () => log('info', 'Server is ready');
 
 createRenderServer(htmlComponents, textComponents, log).listen(port, onReady);

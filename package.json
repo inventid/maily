@@ -1,14 +1,15 @@
 {
-  "name": "mails",
+  "name": "maily",
   "version": "1.0.0",
-  "description": "Mails",
+  "description": "Use standard React to create the HTML emails of your imagination without a headache",
   "main": "dist/index.js",
   "scripts": {
     "start": "npm run dist && node dist/index.js",
     "dist": "babel src --out-dir dist --presets es2015,stage-2,react --plugins syntax-decorators",
-    "watch": "babel src --out-dir dist -w --presets es2015,stage-2,react --plugins syntax-decorators"
+    "watch": "babel src --out-dir dist -w --presets es2015,stage-2,react --plugins syntax-decorators",
+    "prepublish": "npm run dist"
   },
-  "author": "",
+  "author": "Joost Verdoorn & Steffan Sluis",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.0",
