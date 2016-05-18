@@ -1,11 +1,11 @@
 # Maily
 
-Responsive Mails using [Express](https://github.com/expressjs/express), [MJML](https://github.com/mjmlio/mjml) and [React](https://github.com/facebook/react)
+Responsive mails using [Express](https://github.com/expressjs/express), [MJML](https://github.com/mjmlio/mjml) and [React](https://github.com/facebook/react)
 
 ## Install
 ```zsh
 git clone https://github.com/joostverdoorn/maily
-cd mails
+cd maily
 npm install
 ```
 ### Start server
