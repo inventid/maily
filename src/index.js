@@ -1,12 +1,13 @@
-import express from "express";
-import bodyParser from "body-parser";
-import html_strip from "htmlstrip-native";
-import {getBaseComponent, renderReact} from "./render";
+const express = require('express');
+const bodyParser = require('body-parser');
+const html_strip = require('htmlstrip-native');
 const mjml = require('mjml');
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
 
 const HTML = 'html';
 const TXT = 'txt';
-const AllowedTypes = [HTML, TXT];
+const ALLOWED_TYPES = [HTML, TXT];
 
 const TEXT_HTML = 'text/html';
 const TEXT_PLAIN = 'text/plain';
@@ -15,6 +16,17 @@ const CONTENT_TYPE = 'Content-Type';
 const INFO = 'info';
 const WARN = 'warning';
 const ERROR = 'error';
+
+const getBaseComponent = (components, component) => {
+  if (component in components) {
+    return components[component];
+  } else throw new Error(`No component defined with name ${component}`)
+};
+
+const renderReact = (component, data) => {
+  const rootElemComponent = React.createElement(component, data);
+  return ReactDOMServer.renderToStaticMarkup(rootElemComponent);
+};
 
 const html2text = (html) => {
   return html_strip.html_strip(html.replace(/<br\s*\/?>/g, "\n"), {
@@ -29,7 +41,7 @@ const defaultLogger = (level, message) => console.log(`${new Date()} ${level}: $
 
 const renderEngine = (htmlComponents, textComponents, log = defaultLogger) => {
   const createMail = (template, type, data, response) => {
-    if (!AllowedTypes.includes(type)) {
+    if (!ALLOWED_TYPES.includes(type)) {
       log(WARN, `Requested type ${type} could not be handled for template ${template}`);
       response.status('400').end();
       return;
@@ -83,4 +95,4 @@ const renderEngine = (htmlComponents, textComponents, log = defaultLogger) => {
   return server;
 };
 
-export default renderEngine;
+module.exports = renderEngine;

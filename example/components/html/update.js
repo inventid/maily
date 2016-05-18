@@ -1,6 +1,6 @@
 const React = require('react');
 
-const style = require('../style');
+const style = require('../../style');
 
 const Header = require('./header');
 const Footer = require('./footer');
@@ -20,7 +20,7 @@ module.exports = React.createClass({
             <mj-section>
               <mj-column>
 
-                <mj-divider border-color={style.colors.tertiary}></mj-divider>
+                <mj-divider border-color={style.colors.tertiary} />
 
                 <mj-text font-size="20px" color="#F45E43" font-family="helvetica">
                   {this.props.body}

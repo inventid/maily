@@ -1,6 +1,6 @@
 const React = require('react');
 
-const style = require('../style');
+const style = require('../../style');
 
 module.exports = React.createClass({
     render() {
