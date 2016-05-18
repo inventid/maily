@@ -39,7 +39,7 @@ const html2text = (html) => {
 
 const defaultLogger = (level, message) => console.log(`${new Date()} ${level}: ${message}`);
 
-const renderEngine = (htmlComponents, textComponents, log = defaultLogger) => {
+const createRenderServer = (htmlComponents, textComponents, log = defaultLogger) => {
   const createMail = (template, type, data, response) => {
     if (!ALLOWED_TYPES.includes(type)) {
       log(WARN, `Requested type ${type} could not be handled for template ${template}`);
@@ -95,4 +95,4 @@ const renderEngine = (htmlComponents, textComponents, log = defaultLogger) => {
   return server;
 };
 
-module.exports = renderEngine;
+module.exports = createRenderServer;

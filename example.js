@@ -1,13 +1,15 @@
-import renderEngine from './src/index.js';
-import HtmlComponentList from './example/htmlComponents/index';
-import TextComponentList from './example/textComponents/index';
+const createRenderServer = require('./src/index.js');
+const htmlComponents = require('./example/components/html/index');
+const textComponents = require('./example/components/text/index');
 
 const port = process.env.PORT || 3000;
 
 const log = (level, message) => {
-  console.log(JSON.stringify({level,message}));
+  console.log(JSON.stringify({level,message, datetime: (new Date()).toISOString()}));
 };
 
-const onReady = () => console.log(JSON.stringify({level: 'info', message: 'Server is ready'}));
+const onReady = () => {
+  console.log(JSON.stringify({level: 'info', message: 'Server is ready'}));
+};
 
-renderEngine(HtmlComponentList, TextComponentList, log).listen(port, onReady);
+createRenderServer(htmlComponents, textComponents, log).listen(port, onReady);
