@@ -5,7 +5,7 @@ module.exports = {
 
   footer: {
     socialIcon: {
-      size: 16
+      size: '16px'
     }
   },
 
