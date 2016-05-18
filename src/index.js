@@ -7,7 +7,8 @@ const ReactDOMServer = require('react-dom/server');
 
 const HTML = 'html';
 const TXT = 'txt';
-const ALLOWED_TYPES = [HTML, TXT];
+const MJML = 'mjml';
+const ALLOWED_TYPES = [HTML, TXT, MJML];
 
 const TEXT_HTML = 'text/html';
 const TEXT_PLAIN = 'text/plain';
@@ -57,6 +58,10 @@ const createRenderServer = (htmlComponents, textComponents, log = defaultLogger)
     } else if (type === TXT) {
       components = textComponents;
       prepareRender = html2text;
+      contentType = TEXT_PLAIN;
+    } else if ( type === MJML) {
+      components = htmlComponents;
+      prepareRender = (e) => e;
       contentType = TEXT_PLAIN;
     } else {
       response.status(500).end();
