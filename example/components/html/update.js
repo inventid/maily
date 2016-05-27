@@ -9,6 +9,7 @@ module.exports = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     href: React.PropTypes.string.isRequired,
+    body: React.PropTypes.string.isRequired
   },
 
   render() {
