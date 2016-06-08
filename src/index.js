@@ -35,7 +35,7 @@ const html2text = (html) => {
     include_style: false,
     compact_whitespace: false,
     include_attributes: {'alt': false}
-  });
+  }).split("\n").map(l => l.trim()).join("\n");
 };
 
 const defaultLogger = (level, message) => console.log(`${new Date()} ${level}: ${message}`);
