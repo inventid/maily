@@ -1,5 +1,9 @@
 # Maily
 
+![NPM version](https://img.shields.io/npm/v/maily.svg)
+![NPM license](https://img.shields.io/npm/l/maily.svg)
+[![Dependency Status](https://gemnasium.com/badges/github.com/inventid/maily.svg)](https://gemnasium.com/github.com/inventid/maily)
+
 Responsive mails using [Express](https://github.com/expressjs/express), [MJML](https://github.com/mjmlio/mjml) and [React](https://github.com/facebook/react)
 
 ## Install
