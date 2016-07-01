@@ -89,8 +89,8 @@ const createRenderServer = (htmlComponents, textComponents, log = defaultLogger)
 
   const server = express();
 
-  server.use(bodyParser.json());
-  server.use(bodyParser.urlencoded());
+  server.use(bodyParser.json({limit: '1mb'}));
+  server.use(bodyParser.urlencoded({limit: '1mb', extended: true}));
 
   server.get('/favicon.ico', (request, response) => response.status('404').end());
 
