@@ -1,5 +1,8 @@
+// Conditionally load it, so people can use babel-node as well
+if (!global._babelPolyfill) {
+  require('babel-polyfill');
+}
 
-require('babel-polyfill');
 const express = require('express');
 const bodyParser = require('body-parser');
 const html_strip = require('htmlstrip-native');
