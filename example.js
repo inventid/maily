@@ -1,4 +1,8 @@
-const createRenderServer = require('./src/index.js');
+if (!global._babelPolyfill) {
+  require('babel-polyfill');
+}
+
+const createRenderServer = require('./src/index');
 const htmlComponents = require('./example/components/html/index');
 const textComponents = require('./example/components/text/index');
 
