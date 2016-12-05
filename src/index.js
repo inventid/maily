@@ -9,6 +9,7 @@ const html_strip = require('htmlstrip-native');
 const mjml = require('mjml');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
+const minify = require('html-minifier').minify;
 
 const HTML = 'html';
 const TXT = 'txt';
@@ -32,6 +33,14 @@ const getBaseComponent = (components, component) => {
 const renderReact = (component, data) => {
   const rootElemComponent = React.createElement(component, data);
   return ReactDOMServer.renderToStaticMarkup(rootElemComponent);
+};
+
+const minificationOptions = {
+	minifyCSS : true,
+	collapseWhitespace : true,
+	preserveLineBreaks : true,
+	removeEmptyAttributes : false,
+	removeEmptyElements : false,
 };
 
 const html2text = (html) => {
@@ -58,7 +67,11 @@ const createRenderServer = (htmlComponents, textComponents, log = defaultLogger)
     let contentType;
     if (type === HTML) {
       components = htmlComponents;
-      prepareRender = (i) => mjml.mjml2html(i).html;
+      prepareRender = (i) => {
+        const html = mjml.mjml2html(i).html;
+        const minified =  minify(html, minificationOptions);
+        return minified;
+      };
       contentType = TEXT_HTML;
     } else if (type === TXT) {
       components = textComponents;
