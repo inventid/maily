@@ -100,7 +100,16 @@ const createRenderServer = (htmlComponents, textComponents, log = defaultLogger)
   server.get('/favicon.ico', (request, response) => response.status('404').end());
 
   server.get('/:template.:type', (req, res) => createMail(req.params.template, req.params.type, req.query, res));
-  server.post('/:template.:type', (req, res) => createMail(req.params.template, req.params.type, req.body, res));
+  server.post('/:template.:type', (req, res) => {
+	  const data = req.body;
+	  Object.keys(req.query).forEach(value => {
+		  if(data[value]) {
+			  log(WARN, `Body property '${value}' was overwritten by query param.`);
+			  data[value] = req.query[value];
+		  }
+	  });
+    createMail(req.params.template, req.params.type, data, res)
+  });
 
   return server;
 };
