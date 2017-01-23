@@ -1,6 +1,6 @@
 {
   "name": "maily",
-  "version": "3.1.1-1",
+  "version": "3.2.1",
   "description": "Use standard React to create the HTML emails of your imagination without a headache",
   "main": "dist/index.js",
   "scripts": {
