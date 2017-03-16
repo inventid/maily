@@ -31,8 +31,8 @@ const Contact = React.createClass({
 					      color={style.colors.primary}
 					      align="left">
 						inventid<br />
-						Burgwal 47<br />
-						2611GG Delft<br />
+						Schieweg 226b<br />
+						3038BP Rotterdam<br />
 					</Text>
 				</mj-column>
 				<mj-column vertical-align="top"
