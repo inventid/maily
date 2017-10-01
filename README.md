@@ -22,6 +22,11 @@ The resulting HTML and text are added to the email, and then send.
 This allows you to run maily as a simple stateless service in e.g. Docker.
 It also allows you to handle email as you wish, for example by adding attachments before sending.
 
+We have written two blogs posts on how you can create your emails using Maily, leveraging React in the process:
+
+- https://medium.com/@Rogier.Slag/creating-emails-with-the-maily-api-a-how-to-part-1-7f63306a7ad4
+- https://medium.com/@Rogier.Slag/creating-emails-with-the-maily-api-a-how-to-part-2-a75885941da7
+
 ## Install
 ```zsh
 git clone https://github.com/joostverdoorn/maily
