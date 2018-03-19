@@ -6,7 +6,7 @@ if (!global._babelPolyfill) {
 const express = require('express');
 const bodyParser = require('body-parser');
 const html_strip = require('htmlstrip-native');
-const mjml = require('mjml');
+const mjml2html = require('mjml')
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 
@@ -58,7 +58,7 @@ const createRenderServer = (htmlComponents, textComponents, log = defaultLogger)
     let contentType;
     if (type === HTML) {
       components = htmlComponents;
-      prepareRender = (i) => mjml.mjml2html(i).html;
+      prepareRender = (i) => mjml2html(i).html;
       contentType = TEXT_HTML;
     } else if (type === TXT) {
       components = textComponents;
