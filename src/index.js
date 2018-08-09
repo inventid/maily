@@ -58,7 +58,7 @@ const createRenderServer = (htmlComponents, textComponents, log = defaultLogger)
     let contentType;
     if (type === HTML) {
       components = htmlComponents;
-      prepareRender = (i) => mjml.mjml2html(i).html;
+      prepareRender = (i) => mjml(i).html;
       contentType = TEXT_HTML;
     } else if (type === TXT) {
       components = textComponents;
