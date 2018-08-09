@@ -11,6 +11,7 @@ const Envelope = React.createClass({
 	propTypes: {
 		children: React.PropTypes.node.isRequired,
 		showHeaderDivider: React.PropTypes.bool,
+		name: React.PropTypes.string,
 	},
 
 	getDefaultProps() {
@@ -22,14 +23,12 @@ const Envelope = React.createClass({
 	render() {
 		return (
 			<mjml>
-				<mj-body>
-					<mj-container background-color={style.colors.tertiary}
-					              width="500px">
-						<Header />
+				<mj-body background-color={style.colors.tertiary}
+				                         width="500px">
+						<Header name={this.props.name} />
 						{this.props.children}
 						<Contact />
 						<Social />
-					</mj-container>
 				</mj-body>
 			</mjml>
 		);

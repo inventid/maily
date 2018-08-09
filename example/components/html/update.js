@@ -12,7 +12,7 @@ const UpdateMail = React.createClass({
 
 	render() {
 		return (
-			<Envelope>
+			<Envelope name={this.props.name}>
 				<FullWidthSection>
 					<Text>
 						Hi {this.props.name},

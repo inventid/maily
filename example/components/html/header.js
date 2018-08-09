@@ -9,9 +9,10 @@ module.exports = React.createClass({
 
 	render() {
 		return (
-			<mj-section>
+			<mj-section padding={`18px`} >
 				<mj-text font-size={style.header.fontSize}
-				         color={style.colors.primary}>
+				         color={style.colors.primary}
+				>
 					Hello, {this.props.name}
 				</mj-text>
 			</mj-section>
