@@ -29,7 +29,7 @@ We have written two blogs posts on how you can create your emails using Maily, l
 
 ## Install
 ```zsh
-git clone https://github.com/joostverdoorn/maily
+git clone https://github.com/inventid/maily
 cd maily
 npm install
 ```

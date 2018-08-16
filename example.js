@@ -8,10 +8,10 @@ const textComponents = require('./example/components/text/index');
 
 const port = process.env.PORT || 3000;
 
-const log = (level, message) => {
+const logger = (level, message) => {
   console.log(JSON.stringify({level, message, datetime: (new Date()).toISOString()}));
 };
 
-const onReady = () => log('info', 'Server is ready');
+const onReady = () => logger('info', 'Server is ready');
 
-createRenderServer(htmlComponents, textComponents, log).listen(port, onReady);
+createRenderServer(htmlComponents, textComponents, {logger, mjmlStrict: true}).listen(port, onReady);

@@ -26,7 +26,7 @@ const Text = React.createClass({
 			<mj-text padding-top={this.props.paddingTop}
 			         padding-bottom={`${style.distance}px`}
 			         color={this.props.color}
-			         line-height={1.4}
+			         line-height="21px"
 			         align={this.props.align}>
 				{this.props.children}
 			</mj-text>);

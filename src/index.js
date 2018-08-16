@@ -45,7 +45,18 @@ const html2text = (html) => {
 
 const defaultLogger = (level, message) => console.log(`${new Date()} ${level}: ${message}`);
 
-const createRenderServer = (htmlComponents, textComponents, log = defaultLogger) => {
+const createRenderServer = (htmlComponents, textComponents, options) => {
+  let log = defaultLogger;
+  if(typeof options === 'function') {
+    console.warn("Deprecation notice: A logger was passed instead of an options object. The logger be on the `log` key of the options object instead.");
+	  log = options;
+  } else if(options.logger) {
+	  log = options.logger;
+  }
+
+  const mjmlStrict = options.mjmlStrict || false;
+  const mjmlRenderOptions = mjmlStrict ? { level: 'strict' } : {};
+
   const createMail = (template, type, data, response) => {
     if (!ALLOWED_TYPES.includes(type)) {
       log(WARN, `Requested type ${type} could not be handled for template ${template}`);
@@ -58,7 +69,13 @@ const createRenderServer = (htmlComponents, textComponents, log = defaultLogger)
     let contentType;
     if (type === HTML) {
       components = htmlComponents;
-      prepareRender = (i) => mjml(i).html;
+      prepareRender = (i) => {
+        const rendered = mjml(i, mjmlRenderOptions);
+        if (mjmlStrict && rendered.errors.length > 0) {
+          log('warn', `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
+        }
+        return rendered.html
+      };
       contentType = TEXT_HTML;
     } else if (type === TXT) {
       components = textComponents;
