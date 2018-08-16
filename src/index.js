@@ -48,7 +48,7 @@ const defaultLogger = (level, message) => console.log(`${new Date()} ${level}: $
 const createRenderServer = (htmlComponents, textComponents, options) => {
   let log = defaultLogger;
   if(typeof options === 'function') {
-    console.warn("Deprecation notice: A logger was passed instead of an options object. The logger be on the `log` key of the options object instead.");
+      log(WARN, "Deprecation notice: A logger was passed instead of an options object. The logger be on the `log` key of the options object instead.");
 	  log = options;
   } else if(options.logger) {
 	  log = options.logger;
@@ -72,7 +72,9 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
       prepareRender = (i) => {
         const rendered = mjml(i, mjmlRenderOptions);
         if (mjmlStrict && rendered.errors.length > 0) {
-          log('warn', `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
+          // Intentionally logging both
+          log(WARN, `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
+          console.warn(`MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
         }
         return rendered.html
       };
