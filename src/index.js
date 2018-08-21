@@ -124,8 +124,8 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
 	  Object.keys(req.query).forEach(value => {
 		  if(data[value]) {
 			  log(WARN, `Body property '${value}' was overwritten by query param.`);
-			  data[value] = req.query[value];
 		  }
+		  data[value] = req.query[value];
 	  });
     createMail(req.params.template, req.params.type, data, res)
   });
