@@ -1,15 +1,16 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const Header = require('./header');
 const Footer = require('./footer');
 
-const UpdateMail = React.createClass({
-	propTypes : {
-		name : React.PropTypes.string.isRequired,
-		body : React.PropTypes.string.isRequired
-	},
+class UpdateMail extends React.Component {
+    static propTypes = {
+		name : PropTypes.string.isRequired,
+		body : PropTypes.string.isRequired
+	};
 
-	render() {
+    render() {
 		return (
 			<div>
 				<Header name={this.props.name}/>
@@ -18,6 +19,6 @@ const UpdateMail = React.createClass({
 			</div>
 		);
 	}
-});
+}
 
 module.exports = UpdateMail;

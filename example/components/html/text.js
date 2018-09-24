@@ -1,27 +1,26 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const style = require('../../style');
 
-const Text = React.createClass({
-	propTypes : {
-		size : React.PropTypes.string,
-		style : React.PropTypes.string,
-		align : React.PropTypes.string,
-		paddingTop : React.PropTypes.string,
-		color : React.PropTypes.string
-	},
+class Text extends React.Component {
+    static propTypes = {
+		size : PropTypes.string,
+		style : PropTypes.string,
+		align : PropTypes.string,
+		paddingTop : PropTypes.string,
+		color : PropTypes.string
+	};
 
-	getDefaultProps() {
-		return {
-			size : 'medium',
-			style : 'normal',
-			align : 'left',
-			paddingTop : `${style.distance}px`,
-			color : style.colors.black
-		}
-	},
+    static defaultProps = {
+        size : 'medium',
+        style : 'normal',
+        align : 'left',
+        paddingTop : `${style.distance}px`,
+        color : style.colors.black
+    };
 
-	render() {
+    render() {
 		return (
 			<mj-text padding-top={this.props.paddingTop}
 			         padding-bottom={`${style.distance}px`}
@@ -31,6 +30,6 @@ const Text = React.createClass({
 				{this.props.children}
 			</mj-text>);
 	}
-});
+}
 
 module.exports = Text;

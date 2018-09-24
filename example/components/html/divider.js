@@ -2,8 +2,8 @@ const React = require('react');
 
 const style = require('../../style');
 
-const Divider = React.createClass({
-	render() {
+class Divider extends React.Component {
+    render() {
 		return (
 			<mj-divider
 				padding-top="0px"
@@ -14,6 +14,6 @@ const Divider = React.createClass({
 				border-color={style.colors.secondary} />
 		);
 	}
-});
+}
 
 module.exports = Divider;

@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const style = require('../../style');
@@ -6,21 +7,18 @@ const Header = require('./header');
 const Social = require('./social');
 const Contact = require('./contact');
 
-const Envelope = React.createClass({
+class Envelope extends React.Component {
+    static propTypes = {
+		children: PropTypes.node.isRequired,
+		showHeaderDivider: PropTypes.bool,
+		name: PropTypes.string,
+	};
 
-	propTypes: {
-		children: React.PropTypes.node.isRequired,
-		showHeaderDivider: React.PropTypes.bool,
-		name: React.PropTypes.string,
-	},
+    static defaultProps = {
+        showHeaderDivider: true
+    };
 
-	getDefaultProps() {
-		return {
-			showHeaderDivider: true
-		};
-	},
-
-	render() {
+    render() {
 		return (
 			<mjml>
 				<mj-body background-color={style.colors.tertiary}
@@ -33,6 +31,6 @@ const Envelope = React.createClass({
 			</mjml>
 		);
 	}
-});
+}
 
 module.exports = Envelope;

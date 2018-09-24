@@ -1,24 +1,22 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const style = require('../../style');
 
-const FullWidthSection = React.createClass({
+class FullWidthSection extends React.Component {
+    static propTypes = {
+		children: PropTypes.node.isRequired,
+		paddingTop: PropTypes.string,
+		paddingBottom: PropTypes.string
+	};
 
-	propTypes: {
-		children: React.PropTypes.node.isRequired,
-		paddingTop: React.PropTypes.string,
-		paddingBottom: React.PropTypes.string
-	},
+    static defaultProps = {
+        paddingTop: '0px',
+        paddingBottom: '0px',
+        backgroundColor: style.colors.white
+    };
 
-	getDefaultProps() {
-		return {
-			paddingTop: '0px',
-			paddingBottom: '0px',
-			backgroundColor: style.colors.white
-		};
-	},
-
-	render() {
+    render() {
 		return (
 			<mj-section padding-top={this.props.paddingTop}
 			            padding-bottom={this.props.paddingBottom}
@@ -30,6 +28,6 @@ const FullWidthSection = React.createClass({
 			</mj-section>
 		);
 	}
-});
+}
 
 module.exports = FullWidthSection;

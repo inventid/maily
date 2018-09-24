@@ -1,3 +1,4 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const style = require('../../style');
@@ -5,18 +6,16 @@ const style = require('../../style');
 const Divider = require('./divider');
 const Text = require('./text');
 
-const Contact = React.createClass({
-	propTypes : {
-		lang : React.PropTypes.string
-	},
+class Contact extends React.Component {
+    static propTypes = {
+		lang : PropTypes.string
+	};
 
-	getDefaultProps() {
-		return {
-			lang : 'en'
-		};
-	},
+    static defaultProps = {
+        lang : 'en'
+    };
 
-	render() {
+    render() {
 		return (
 			<mj-section background-color={style.colors.white}
 			            padding-top={`${style.distance}px`}
@@ -49,6 +48,6 @@ const Contact = React.createClass({
 			</mj-section>
 		)
 	}
-});
+}
 
 module.exports = Contact;

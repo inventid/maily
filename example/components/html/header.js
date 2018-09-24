@@ -1,13 +1,14 @@
+const PropTypes = require('prop-types');
 const React = require('react');
 
 const style = require('../../style');
 
-module.exports = React.createClass({
-	propTypes : {
-		name : React.PropTypes.string.isRequired
-	},
+module.exports = class extends React.Component {
+    static propTypes = {
+		name : PropTypes.string.isRequired
+	};
 
-	render() {
+    render() {
 		return (
 			<mj-section padding={`18px`}>
 				<mj-column>
@@ -19,4 +20,4 @@ module.exports = React.createClass({
 			</mj-section>
 		);
 	}
-});
+};

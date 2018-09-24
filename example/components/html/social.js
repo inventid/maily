@@ -2,8 +2,8 @@ const React = require('react');
 
 const style = require('../../style');
 
-const Social = React.createClass({
-	render() {
+class Social extends React.Component {
+    render() {
 		return (
 			<mj-section background-color={style.colors.white}
 			            padding-top={`${style.distance}px`}
@@ -20,6 +20,6 @@ const Social = React.createClass({
 			</mj-section>
 		)
 	}
-});
+}
 
 module.exports = Social;
