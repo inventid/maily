@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const striptags = require('striptags');
 const mjml = require('mjml').default;
 const React = require('react');
+const pretty = require('pretty');
 const ReactDOMServer = require('react-dom/server');
 
 const HTML = 'html';
@@ -74,7 +75,7 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
           log(WARN, `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
           console.warn(`MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
         }
-        return rendered.html
+        return pretty(rendered.html);
       };
       contentType = TEXT_HTML;
     } else if (type === TXT) {
@@ -83,7 +84,7 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
       contentType = TEXT_PLAIN;
     } else if ( type === MJML) {
       components = htmlComponents;
-      prepareRender = (e) => e;
+      prepareRender = (e) => pretty(e);
       contentType = TEXT_PLAIN;
     } else {
       response.status(500).end();
