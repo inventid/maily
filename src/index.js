@@ -75,7 +75,7 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
           log(WARN, `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
           console.warn(`MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
         }
-        return pretty(rendered.html);
+        return pretty(rendered.html, {ocd: true});
       };
       contentType = TEXT_HTML;
     } else if (type === TXT) {
@@ -84,7 +84,7 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
       contentType = TEXT_PLAIN;
     } else if ( type === MJML) {
       components = htmlComponents;
-      prepareRender = (e) => pretty(e);
+      prepareRender = (e) => pretty(e, {ocd: true});
       contentType = TEXT_PLAIN;
     } else {
       response.status(500).end();
