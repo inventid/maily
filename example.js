@@ -14,4 +14,10 @@ const logger = (level, message) => {
 
 const onReady = () => logger('info', 'Server is ready');
 
-createRenderServer(htmlComponents, textComponents, {logger, mjmlStrict: true}).listen(port, onReady);
+const options = {
+    logger,
+    mjmlStrict: true,
+    // Uses the exact same format as those for HTMLMinifier https://www.npmjs.com/package/html-minifier
+    minificationOptions: {}
+};
+createRenderServer(htmlComponents, textComponents, options).listen(port, onReady);

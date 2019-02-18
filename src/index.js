@@ -9,6 +9,7 @@ const striptags = require('striptags');
 const mjml = require('mjml').default;
 const React = require('react');
 const pretty = require('pretty');
+const minify = require('html-minifier').minify;
 const ReactDOMServer = require('react-dom/server');
 
 const HTML = 'html';
@@ -52,6 +53,10 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
   } else if(options.logger) {
 	  log = options.logger;
   }
+  let htmlFormat = input => pretty(input, {ocd: true});
+  if (options.minificationOptions && typeof options.minificationOptions === 'object') {
+    htmlFormat = input => minify(input, options.minificationOptions);
+  }
 
   const mjmlStrict = options.mjmlStrict || false;
   const mjmlRenderOptions = mjmlStrict ? { level: 'strict' } : {};
@@ -75,7 +80,7 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
           log(WARN, `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
           console.warn(`MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
         }
-        return pretty(rendered.html, {ocd: true});
+        return htmlFormat(rendered.html);
       };
       contentType = TEXT_HTML;
     } else if (type === TXT) {
