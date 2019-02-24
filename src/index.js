@@ -6,7 +6,7 @@ if (!global._babelPolyfill) {
 const express = require('express');
 const bodyParser = require('body-parser');
 const striptags = require('striptags');
-const mjml = require('mjml').default;
+const mjml = require('mjml');
 const React = require('react');
 const pretty = require('pretty');
 const minify = require('html-minifier').minify;
