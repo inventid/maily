@@ -3,12 +3,12 @@ const React = require('react');
 
 const style = require('../../style');
 
-module.exports = class extends React.Component {
-    static propTypes = {
+export default class extends React.Component {
+	static propTypes = {
 		name : PropTypes.string.isRequired
 	};
 
-    render() {
+	render() {
 		return (
 			<mj-section padding={`18px`}>
 				<mj-column>

@@ -1,9 +1,9 @@
-const React = require('react');
+import React from 'react';
 
-const style = require('../../style');
+import style from '../../style';
 
-class Social extends React.Component {
-    render() {
+export default class Social extends React.Component {
+	render() {
 		return (
 			<mj-section background-color={style.colors.white}
 			            padding-top={`${style.distance}px`}
@@ -14,12 +14,10 @@ class Social extends React.Component {
 					<mj-social>
 						<mj-social-element background-color="#3b5998"
 						                   href="https://www.facebook.com/inventid.nl"
-						                   src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png" />
+						                   src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png"/>
 					</mj-social>
 				</mj-column>
 			</mj-section>
 		)
 	}
 }
-
-module.exports = Social;

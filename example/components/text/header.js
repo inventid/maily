@@ -1,15 +1,15 @@
-const PropTypes = require('prop-types');
-const React = require('react');
+import PropTypes from 'prop-types';
+import React from 'react';
 
-module.exports = class extends React.Component {
-    static propTypes = {
+export default class extends React.Component {
+	static propTypes = {
 		name : PropTypes.string.isRequired
 	};
 
-    render() {
+	render() {
 		return <div>
 			Hello, {this.props.name}
-			<br />
+			<br/>
 		</div>;
 	}
 };

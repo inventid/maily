@@ -1,10 +1,10 @@
-const PropTypes = require('prop-types');
-const React = require('react');
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const style = require('../../style');
+import style from '../../style';
 
-class Text extends React.Component {
-    static propTypes = {
+export default class Text extends React.Component {
+	static propTypes = {
 		size : PropTypes.string,
 		style : PropTypes.string,
 		align : PropTypes.string,
@@ -12,15 +12,15 @@ class Text extends React.Component {
 		color : PropTypes.string
 	};
 
-    static defaultProps = {
-        size : 'medium',
-        style : 'normal',
-        align : 'left',
-        paddingTop : `${style.distance}px`,
-        color : style.colors.black
-    };
+	static defaultProps = {
+		size : 'medium',
+		style : 'normal',
+		align : 'left',
+		paddingTop : `${style.distance}px`,
+		color : style.colors.black
+	};
 
-    render() {
+	render() {
 		return (
 			<mj-text padding-top={this.props.paddingTop}
 			         padding-bottom={`${style.distance}px`}
@@ -31,5 +31,3 @@ class Text extends React.Component {
 			</mj-text>);
 	}
 }
-
-module.exports = Text;

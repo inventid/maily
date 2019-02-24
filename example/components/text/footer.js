@@ -1,9 +1,9 @@
-const React = require('react');
+import React from 'react';
 
 class Footer extends React.Component {
-    render() {
-        return <p><br />And thanks for having us!</p>;
-    }
+	render() {
+		return <p><br/>And thanks for having us!</p>;
+	}
 }
 
-module.exports = Footer;
+export default Footer;
