@@ -11,7 +11,7 @@
     "build:example": "yarn build && babel example --out-dir build/example --presets es2015,stage-2,react,babel-polyfill --plugins syntax-decorators",
     "build:test": "yarn build && babel tests --out-dir build/tests --presets es2015,stage-2,react,babel-polyfill --plugins syntax-decorators  && cp -R tests/result build/tests/",
     "build:watch": "babel src -w --out-dir build/src --presets es2015,stage-2,react,babel-polyfill --plugins syntax-decorators",
-    "prepublish": "npm run build",
+    "prepublish": "yarn clean && yarn test && yarn clean && yarn build",
     "test": "yarn build:test && node build/tests/index.js",
     "test:update": "yarn build:test && node build/tests/index.js --update && echo 'Syncing tests update'  && cp -R build/tests/result/* tests/result/",
     "example": "yarn build:example && yarn start:example"
