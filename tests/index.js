@@ -25,12 +25,13 @@ const cliColors = {
 	'1' : color.redBright,
 };
 
+const WRITE_MODE = process.argv[2] === '--update';
 const dmp = new DiffMatchPatch();
 const fileOptions = {
 	encoding : 'utf8',
 };
 const compare = async (template, path, result) => {
-	if (process.argv[2] === '--update') {
+	if (WRITE_MODE) {
 		console.log(color.green(`Writing ${template} to ${path}`));
 		fs.writeFileSync(path, result, fileOptions);
 	} else {
@@ -49,7 +50,6 @@ const compare = async (template, path, result) => {
 				const colored = cliColors[type.toString()](text);
 				process.stdout.write(colored);
 			}
-			console.log();
 			process.exit(1);
 		}
 	}
@@ -61,7 +61,6 @@ const onReady = async () => {
 	const textTemplates = Object.keys(textComponents);
 
 	await fs.access(dir, fs.constants.F_OK, async (err) => {
-		console.log(err);
 		if (err) {
 			await fs.mkdir(dir);
 		}
@@ -87,7 +86,11 @@ const onReady = async () => {
 	}
 	server.close();
 
-	console.log(color.green('All snapshots match'));
+	if (WRITE_MODE) {
+		console.log(color.red('All snapshots have been written'));
+	} else {
+		console.log(color.green('All snapshots match'));
+	}
 };
 
 const options = {

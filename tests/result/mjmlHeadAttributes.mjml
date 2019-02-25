@@ -1,0 +1,17 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-text padding="0"></mj-text>
+      <mj-class name="blue" color="blue"></mj-class>
+      <mj-class name="big" font-size="20px"></mj-class>
+      <mj-all font-family="Arial"></mj-all>
+    </mj-attributes>
+  </mj-head>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text mj-class="blue big">Hello World!</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

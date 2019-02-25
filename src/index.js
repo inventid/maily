@@ -27,7 +27,9 @@ const ERROR = 'error';
 const getBaseComponent = (components, component) => {
 	if (component in components) {
 		return components[component];
-	} else throw new Error(`No component defined with name ${component}`)
+	} else {
+		throw new Error(`No component defined with name ${component}`)
+	}
 };
 
 const renderReact = (component, data) => {
