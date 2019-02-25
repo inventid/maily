@@ -2,9 +2,9 @@
   "name": "maily",
   "version": "4.3.1-1",
   "description": "Use standard React to create the HTML emails of your imagination without a headache",
-  "main": "dist/index.js",
+  "main": "build/src/index.js",
   "scripts": {
-    "start": "yarn build && node dist/index.js",
+    "start": "yarn build && node build/src/index.js",
     "start:example": "node build/example/index.js",
     "clean": "rm -Rf build",
     "build": "babel src --out-dir build/src --presets es2015,stage-2,react,babel-polyfill --plugins syntax-decorators",
@@ -16,8 +16,8 @@
     "test:update": "yarn build:test && node build/tests/index.js --update && echo 'Syncing tests update'  && cp -R build/tests/result/* tests/result/",
     "example": "yarn build:example && yarn start:example"
   },
-  "author": "Joost Verdoorn & Steffan Sluis",
-  "license": "ISC",
+  "author": "inventid <tech@inventid.nl>",
+  "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.16.0",
     "body-parser": "^1.16.0",
