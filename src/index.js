@@ -72,44 +72,42 @@ const getOptions = options => {
 };
 
 const getRenderer = (template, type, comps, options) => {
-	let components;
-	let prepareRender;
-	let contentType;
-
 	const {htmlComponents, textComponents} = comps;
 	const {htmlFormat, mjmlRenderOptions, mjmlStrict, log} = options;
 
-	if (type === HTML) {
-		components = htmlComponents;
-		prepareRender = (i) => {
-			const rendered = mjml(i, mjmlRenderOptions);
-			if (mjmlStrict && rendered.errors.length > 0) {
-				// Intentionally logging both
-				const message = `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`;
-				log(WARN, message);
-				console.warn(message);
-			}
-			return htmlFormat(rendered.html);
-		};
-		contentType = TEXT_HTML;
-	} else if (type === TXT) {
-		components = textComponents;
-		prepareRender = html2text;
-		contentType = TEXT_PLAIN;
-	} else if (type === MJML) {
-		components = htmlComponents;
-		prepareRender = (e) => pretty(e, {ocd : true});
-		contentType = TEXT_PLAIN;
-	} else {
-		const error = new Error(`Type ${type} was accepted but not handled!`);
-		error.internal = true;
-		throw error;
-	}
-
-	return {
-		components,
-		prepareRender,
-		contentType,
+	switch (type) {
+		case HTML:
+			const prepareRender = (i) => {
+				const rendered = mjml(i, mjmlRenderOptions);
+				if (mjmlStrict && rendered.errors.length > 0) {
+					// Intentionally logging both
+					const message = `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`;
+					log(WARN, message);
+					console.warn(message);
+				}
+				return htmlFormat(rendered.html);
+			};
+			return {
+				components : htmlComponents,
+				prepareRender,
+				contentType : TEXT_HTML,
+			};
+		case MJML:
+			return {
+				components : htmlComponents,
+				prepareRender : (e) => pretty(e, {ocd : true}),
+				contentType : TEXT_PLAIN,
+			};
+		case TXT:
+			return {
+				components : textComponents,
+				prepareRender : html2text,
+				contentType : TEXT_PLAIN,
+			};
+		default:
+			const error = new Error(`Type ${type} was accepted but not handled!`);
+			error.internal = true;
+			throw error;
 	}
 };
 
