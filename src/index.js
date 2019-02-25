@@ -71,6 +71,7 @@ const getOptions = options => {
 	}
 };
 
+// eslint-disable-next-line max-statements
 const getRenderer = (template, type, comps, options) => {
 	const {htmlComponents, textComponents} = comps;
 	const {htmlFormat, mjmlRenderOptions, mjmlStrict, log} = options;
