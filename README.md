@@ -28,8 +28,8 @@ An example!
 
 We have written two blogs posts on how you can create your emails using Maily, leveraging React in the process:
 
-- [https://medium.com/@Rogier.Slag/creating-emails-with-the-maily-api-a-how-to-part-1-7f63306a7ad4](Creating emails with the Maily API - How to part 1)
-- [https://medium.com/@Rogier.Slag/creating-emails-with-the-maily-api-a-how-to-part-2-a75885941da7](Creating emails with the Maily API - How to part 2)
+- [Creating emails with the Maily API - How to part 1](https://medium.com/@Rogier.Slag/creating-emails-with-the-maily-api-a-how-to-part-1-7f63306a7ad4)
+- [Creating emails with the Maily API - How to part 2](https://medium.com/@Rogier.Slag/creating-emails-with-the-maily-api-a-how-to-part-2-a75885941da7)
 
 Or take a look at the [`/example`](https://github.com/inventid/maily/tree/master/example) directory!
 
