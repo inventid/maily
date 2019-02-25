@@ -1,6 +1,7 @@
 import './mocks';
 import plainMjmlRender from './plain_mjml';
 import reactBasedMjmlRender from './react_mjml';
+import broken from './broken';
 
 import mjmlAccordion from './mjml-accordion';
 import mjmlBody from './mjml-body';
@@ -29,6 +30,7 @@ import mjmlWrapper from './mjml-wrapper';
 export default {
 	plainMjmlRender,
 	reactBasedMjmlRender,
+	broken,
 
 	// MJML items
 	// For these, please leave the original links to Mailjet intact

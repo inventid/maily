@@ -84,6 +84,33 @@ const onReady = async () => {
 		const path = `${dir}/${template}.txt`;
 		await compare(template, path, result);
 	}
+
+	console.log(color.yellow('Some errors are expected below as part of the test suite'));
+
+	// No such template
+	const notFoundStatus = await fetch(`http://localhost:3000/ThisOneReallyDoesNotExist.html`).then(x => x.status);
+	if (notFoundStatus !== 404) {
+		// Should not exist
+		console.error(color.redBright(`Non existing template did not return a 404, got ${notFoundStatus} instead`));
+		process.exit(1)
+	}
+
+	// No such template
+	const brokenStatus = await fetch(`http://localhost:3000/broken.html`).then(x => x.status);
+	if (brokenStatus !== 500) {
+		// Should have thrown
+		console.error(color.redBright(`Broken template did not return a 500, got ${brokenStatus} instead`));
+		process.exit(1)
+	}
+
+	// No such type
+	const typeStatus = await fetch(`http://localhost:3000/plain_mjml.jpg`).then(x => x.status);
+	if (typeStatus !== 400) {
+		// Should have thrown
+		console.error(color.redBright(`Unknown type did not return a 400, got ${typeStatus} instead`));
+		process.exit(1)
+	}
+
 	server.close();
 
 	if (WRITE_MODE) {
