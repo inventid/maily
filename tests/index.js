@@ -68,19 +68,19 @@ const onReady = async () => {
 
 	for (let i = 0; i < htmlTemplates.length; i++) {
 		const template = htmlTemplates[i];
-		const result = await fetch(`http://localhost:3000/${template}.html`).then(x => x.text());
+		const result = await fetch(`http://localhost:${port}/${template}.html`).then(x => x.text());
 		const path = `${dir}/${template}.html`;
 		await compare(template, path, result);
 	}
 	for (let i = 0; i < htmlTemplates.length; i++) {
 		const template = htmlTemplates[i];
-		const result = await fetch(`http://localhost:3000/${template}.mjml`).then(x => x.text());
+		const result = await fetch(`http://localhost:${port}/${template}.mjml`).then(x => x.text());
 		const path = `${dir}/${template}.mjml`;
 		await compare(template, path, result);
 	}
 	for (let i = 0; i < textTemplates.length; i++) {
 		const template = textTemplates[i];
-		const result = await fetch(`http://localhost:3000/${template}.txt`).then(x => x.text());
+		const result = await fetch(`http://localhost:${port}/${template}.txt`).then(x => x.text());
 		const path = `${dir}/${template}.txt`;
 		await compare(template, path, result);
 	}
@@ -88,7 +88,7 @@ const onReady = async () => {
 	console.log(color.yellow('Some errors are expected below as part of the test suite'));
 
 	// No such template
-	const notFoundStatus = await fetch(`http://localhost:3000/ThisOneReallyDoesNotExist.html`).then(x => x.status);
+	const notFoundStatus = await fetch(`http://localhost:${port}/ThisOneReallyDoesNotExist.html`).then(x => x.status);
 	if (notFoundStatus !== 404) {
 		// Should not exist
 		console.error(color.redBright(`Non existing template did not return a 404, got ${notFoundStatus} instead`));
@@ -96,7 +96,7 @@ const onReady = async () => {
 	}
 
 	// No such template
-	const brokenStatus = await fetch(`http://localhost:3000/broken.html`).then(x => x.status);
+	const brokenStatus = await fetch(`http://localhost:${port}/broken.html`).then(x => x.status);
 	if (brokenStatus !== 500) {
 		// Should have thrown
 		console.error(color.redBright(`Broken template did not return a 500, got ${brokenStatus} instead`));
@@ -104,7 +104,7 @@ const onReady = async () => {
 	}
 
 	// No such type
-	const typeStatus = await fetch(`http://localhost:3000/plain_mjml.jpg`).then(x => x.status);
+	const typeStatus = await fetch(`http://localhost:${port}/plain_mjml.jpg`).then(x => x.status);
 	if (typeStatus !== 400) {
 		// Should have thrown
 		console.error(color.redBright(`Unknown type did not return a 400, got ${typeStatus} instead`));
