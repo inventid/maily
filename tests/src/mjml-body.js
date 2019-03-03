@@ -5,7 +5,7 @@ export default class MjmlBody extends React.Component {
 		return (
 			<mjml>
 				<mj-body>
-					{/* Intentionally empty*/}
+					{/* Intentionally empty */}
 				</mj-body>
 			</mjml>
 		);

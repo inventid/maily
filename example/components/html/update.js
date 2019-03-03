@@ -7,19 +7,20 @@ import Envelope from './envelope';
 
 export default class UpdateMail extends React.Component {
 	static propTypes = {
-		name : PropTypes.string.isRequired,
-		body : PropTypes.string.isRequired
+		name: PropTypes.string.isRequired,
+		body: PropTypes.string.isRequired,
 	};
 
 	render() {
+		const { name, body } = this.props;
 		return (
-			<Envelope name={this.props.name}>
+			<Envelope name={name}>
 				<FullWidthSection>
 					<Text>
-						Hi {this.props.name},
+						{`Hi ${name},`}
 					</Text>
 					<Text>
-						{this.props.body}
+						{body}
 					</Text>
 				</FullWidthSection>
 			</Envelope>

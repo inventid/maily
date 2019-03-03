@@ -5,13 +5,13 @@ export default class MjmlHeadFont extends React.Component {
 		return (
 			<mjml>
 				<mj-head>
-					<mj-font name="Raleway" href="https://fonts.googleapis.com/css?family=Raleway"/>
+					<mj-font name="Raleway" href="https://fonts.googleapis.com/css?family=Raleway" />
 				</mj-head>
 				<mj-body>
 					<mj-section>
 						<mj-column>
 							<mj-text font-family="Raleway, Arial">
-								Hello World!
+								{'Hello World!'}
 							</mj-text>
 						</mj-column>
 					</mj-section>

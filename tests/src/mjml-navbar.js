@@ -9,16 +9,16 @@ export default class MjmlNavbar extends React.Component {
 						<mj-column>
 							<mj-navbar base-url="https://mjml.io" hamburger="hamburger" ico-color="#ffffff">
 								<mj-navbar-link href="/gettings-started-onboard" color="#ffffff">
-									Getting started
+									{'Getting started'}
 								</mj-navbar-link>
 								<mj-navbar-link href="/try-it-live" color="#ffffff">
-									Try it live
+									{'Try it live'}
 								</mj-navbar-link>
 								<mj-navbar-link href="/templates" color="#ffffff">
-									Templates
+									{'Templates'}
 								</mj-navbar-link>
 								<mj-navbar-link href="/components" color="#ffffff">
-									Components
+									{'Components'}
 								</mj-navbar-link>
 							</mj-navbar>
 						</mj-column>

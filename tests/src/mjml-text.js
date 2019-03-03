@@ -8,9 +8,7 @@ export default class MjmlText extends React.Component {
 					<mj-section>
 						<mj-column>
 							<mj-text>
-								<h1>
-									Hey Title!
-								</h1>
+								<h1>Hey Title!</h1>
 							</mj-text>
 						</mj-column>
 					</mj-section>
