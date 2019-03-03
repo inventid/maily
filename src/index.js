@@ -24,13 +24,13 @@ const INFO = 'info';
 const WARN = 'warning';
 const ERROR = 'error';
 
+class InternalError extends Error {};
+
 const getBaseComponent = (components, component) => {
 	if (component in components) {
 		return components[component];
 	} else {
-		const error = new Error(`No component defined with name ${component}`);
-		error.internal = true;
-		throw error;
+		throw new InternalError(`No component defined with name ${component}`);
 	}
 };
 
@@ -106,9 +106,7 @@ const getRenderer = (template, type, comps, options) => {
 				contentType : TEXT_PLAIN,
 			};
 		default:
-			const error = new Error(`Type ${type} was accepted but not handled!`);
-			error.internal = true;
-			throw error;
+			throw new InternalError(`Type ${type} was accepted but not handled!`);
 	}
 };
 
@@ -141,7 +139,7 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
 			response.set(CONTENT_TYPE, contentType).send(prepareRender(renderReact(reactTemplate, data))).end();
 			log(INFO, `Rendered template ${template} for type ${type}`);
 		} catch (e) {
-			const message = e.internal === true ? e.message :
+			const message = e instanceof InternalError ? e.message :
 				`Error occurred while rendering ${template}.${type}. This is usually because of an invalid template. See the server logs for more information`;
 			response.status(500).end(message);
 			log(ERROR, e.message);
