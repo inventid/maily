@@ -13,7 +13,7 @@
     "build:watch": "babel src -w --out-dir build/src",
     "prepublish": "yarn clean && yarn test && yarn clean && yarn build",
     "lint": "eslint .",
-    "test": "yarn build:test && node build/tests/index.js",
+    "test": "yarn build:test && node build/tests/index.js && yarn lint",
     "test:update": "yarn build:test && node build/tests/index.js --update && echo 'Syncing tests update'  && cp -R build/tests/result/* tests/result/",
     "example": "yarn build:example && yarn start:example"
   },
