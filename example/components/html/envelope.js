@@ -1,36 +1,34 @@
-const PropTypes = require('prop-types');
-const React = require('react');
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const style = require('../../style');
+import style from '../../style';
 
-const Header = require('./header');
-const Social = require('./social');
-const Contact = require('./contact');
+import Header from './header';
+import Social from './social';
+import Contact from './contact';
 
-class Envelope extends React.Component {
-    static propTypes = {
-		children: PropTypes.node.isRequired,
-		showHeaderDivider: PropTypes.bool,
-		name: PropTypes.string,
+export default class Envelope extends React.Component {
+	static propTypes = {
+		children : PropTypes.node.isRequired,
+		showHeaderDivider : PropTypes.bool,
+		name : PropTypes.string,
 	};
 
-    static defaultProps = {
-        showHeaderDivider: true
-    };
+	static defaultProps = {
+		showHeaderDivider : true
+	};
 
-    render() {
+	render() {
 		return (
 			<mjml>
 				<mj-body background-color={style.colors.tertiary}
-				                         width="500px">
-						<Header name={this.props.name} />
-						{this.props.children}
-						<Contact />
-						<Social />
+				         width="500px">
+					<Header name={this.props.name}/>
+					{this.props.children}
+					<Contact/>
+					<Social/>
 				</mj-body>
 			</mjml>
 		);
 	}
 }
-
-module.exports = Envelope;

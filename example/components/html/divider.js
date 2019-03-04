@@ -1,9 +1,9 @@
-const React = require('react');
+import React from 'react';
 
-const style = require('../../style');
+import style from '../../style';
 
-class Divider extends React.Component {
-    render() {
+export default class Divider extends React.Component {
+	render() {
 		return (
 			<mj-divider
 				padding-top="0px"
@@ -11,9 +11,7 @@ class Divider extends React.Component {
 				padding-left={`${style.distance}px`}
 				padding-right={`${style.distance}px`}
 				border-width="1px"
-				border-color={style.colors.secondary} />
+				border-color={style.colors.secondary}/>
 		);
 	}
 }
-
-module.exports = Divider;

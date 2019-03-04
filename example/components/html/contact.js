@@ -1,21 +1,21 @@
-const PropTypes = require('prop-types');
-const React = require('react');
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const style = require('../../style');
+import style from '../../style';
 
-const Divider = require('./divider');
-const Text = require('./text');
+import Divider from './divider';
+import Text from './text';
 
-class Contact extends React.Component {
-    static propTypes = {
+export default class Contact extends React.Component {
+	static propTypes = {
 		lang : PropTypes.string
 	};
 
-    static defaultProps = {
-        lang : 'en'
-    };
+	static defaultProps = {
+		lang : 'en'
+	};
 
-    render() {
+	render() {
 		return (
 			<mj-section background-color={style.colors.white}
 			            padding-top={`${style.distance}px`}
@@ -23,15 +23,15 @@ class Contact extends React.Component {
 			            padding-right="0px"
 			            padding-bottom={`${style.distance}px`}>
 				<mj-column vertical-align="top" width={style.width.full}>
-					<Divider />
+					<Divider/>
 				</mj-column>
 				<mj-column vertical-align="top" width={style.width.half}>
 					<Text size="small" padding-top={`${style.distance}px`}
 					      color={style.colors.primary}
 					      align="left">
-						inventid<br />
-						Van Vlooswijkstraat 19b<br />
-						3039TN Rotterdam<br />
+						inventid<br/>
+						Van Vlooswijkstraat 19b<br/>
+						3039TN Rotterdam<br/>
 					</Text>
 				</mj-column>
 				<mj-column vertical-align="top"
@@ -40,8 +40,8 @@ class Contact extends React.Component {
 					      padding-top={`${style.distance}`}
 					      color={style.colors.primary}
 					      align="left">
-						<a href="https://www.inventid.nl">www.inventid.nl</a><br />
-						<a href="mailto:support@inventid.nl">support@inventid.nl</a><br />
+						<a href="https://www.inventid.nl">www.inventid.nl</a><br/>
+						<a href="mailto:support@inventid.nl">support@inventid.nl</a><br/>
 						<a href="https://www.inventid.nl/docs/privacy-statement.pdf">Privacy Statement</a>
 					</Text>
 				</mj-column>
@@ -49,5 +49,3 @@ class Contact extends React.Component {
 		)
 	}
 }
-
-module.exports = Contact;

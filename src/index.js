@@ -1,16 +1,15 @@
-// Conditionally load it, so people can use babel-node as well
 if (!global._babelPolyfill) {
-  require('babel-polyfill');
+	require('babel-polyfill');
 }
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const striptags = require('striptags');
-const mjml = require('mjml');
-const React = require('react');
-const pretty = require('pretty');
-const minify = require('html-minifier').minify;
-const ReactDOMServer = require('react-dom/server');
+import express from 'express';
+import bodyParser from 'body-parser';
+import striptags from 'striptags';
+import mjml from 'mjml';
+import React from 'react';
+import pretty from 'pretty';
+import {minify} from 'html-minifier';
+import ReactDOMServer from 'react-dom/server';
 
 const HTML = 'html';
 const TXT = 'txt';
@@ -25,116 +24,148 @@ const INFO = 'info';
 const WARN = 'warning';
 const ERROR = 'error';
 
+class InternalError extends Error {};
+
 const getBaseComponent = (components, component) => {
-  if (component in components) {
-    return components[component];
-  } else throw new Error(`No component defined with name ${component}`)
+	if (component in components) {
+		return components[component];
+	} else {
+		throw new InternalError(`No component defined with name ${component}`);
+	}
 };
 
 const renderReact = (component, data) => {
-  const rootElemComponent = React.createElement(component, data);
-  return ReactDOMServer.renderToStaticMarkup(rootElemComponent);
+	const rootElemComponent = React.createElement(component, data);
+	return ReactDOMServer.renderToStaticMarkup(rootElemComponent);
 };
 
 const html2text = (html) => {
-  return striptags(html.replace(/<br\s*\/?>/g, "\n"))
-      .split("\n")
-      .map(l => l.trim())
-      .join("\n");
+	return striptags(html.replace(/<br\s*\/?>/g, "\n"))
+		.split("\n")
+		.map(l => l.trim())
+		.join("\n");
 };
 
 const defaultLogger = (level, message) => console.log(`${new Date()} ${level}: ${message}`);
 
-const createRenderServer = (htmlComponents, textComponents, options) => {
-  let log = defaultLogger;
-  if(typeof options === 'function') {
-      log(WARN, "Deprecation notice: A logger was passed instead of an options object. The logger be on the `log` key of the options object instead.");
-	  log = options;
-  } else if(options.logger) {
-	  log = options.logger;
-  }
-  let htmlFormat = input => pretty(input, {ocd: true});
-  if (options.minificationOptions && typeof options.minificationOptions === 'object') {
-    htmlFormat = input => minify(input, options.minificationOptions);
-  }
+const getOptions = options => {
+	let log = defaultLogger;
+	if (typeof options === 'function') {
+		// TODO remove in v6
+		log(WARN, "Deprecation notice: A logger was passed instead of an options object. The logger should be on the `log` key of the options object instead.");
+		log = options;
+	} else if (options.logger) {
+		log = options.logger;
+	}
 
-  const mjmlStrict = options.mjmlStrict || false;
-  const mjmlRenderOptions = mjmlStrict ? { level: 'strict' } : {};
+	let htmlFormat = input => pretty(input, {ocd : true});
+	if (options.minificationOptions && typeof options.minificationOptions === 'object') {
+		htmlFormat = input => minify(input, options.minificationOptions);
+	}
 
-  const createMail = (template, type, data, response) => {
-    if (!ALLOWED_TYPES.includes(type)) {
-      log(WARN, `Requested type ${type} could not be handled for template ${template}`);
-      response.status('400').end();
-      return;
-    }
-
-    let components;
-    let prepareRender;
-    let contentType;
-    if (type === HTML) {
-      components = htmlComponents;
-      prepareRender = (i) => {
-        const rendered = mjml(i, mjmlRenderOptions);
-        if (mjmlStrict && rendered.errors.length > 0) {
-          // Intentionally logging both
-          log(WARN, `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
-          console.warn(`MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`);
-        }
-        return htmlFormat(rendered.html);
-      };
-      contentType = TEXT_HTML;
-    } else if (type === TXT) {
-      components = textComponents;
-      prepareRender = html2text;
-      contentType = TEXT_PLAIN;
-    } else if ( type === MJML) {
-      components = htmlComponents;
-      prepareRender = (e) => pretty(e, {ocd: true});
-      contentType = TEXT_PLAIN;
-    } else {
-      response.status(500).end();
-      log(ERROR, `Type ${type} was accepted but not handled!`);
-      return;
-    }
-
-    try {
-      let reactTemplate;
-      try {
-        reactTemplate = getBaseComponent(components, template);
-      } catch (e) {
-        log(WARN, `Template ${template} does not exist for requested type ${type}`);
-        response.status(404).end();
-        return;
-      }
-      response.set(CONTENT_TYPE, contentType).send(prepareRender(renderReact(reactTemplate, data))).end();
-      log(INFO, `Rendered template ${template} for type ${type}`);
-    } catch (e) {
-      log(ERROR, `Error occured while rendering: "${e}"`);
-      response.status(500).end();
-    }
-
-  };
-
-  const server = express();
-
-  server.use(bodyParser.json({limit: '1mb'}));
-  server.use(bodyParser.urlencoded({limit: '1mb', extended: true}));
-
-  server.get('/favicon.ico', (request, response) => response.status('404').end());
-
-  server.get('/:template.:type', (req, res) => createMail(req.params.template, req.params.type, req.query, res));
-  server.post('/:template.:type', (req, res) => {
-	  const data = req.body;
-	  Object.keys(req.query).forEach(value => {
-		  if(data[value]) {
-			  log(WARN, `Body property '${value}' was overwritten by query param.`);
-		  }
-		  data[value] = req.query[value];
-	  });
-    createMail(req.params.template, req.params.type, data, res)
-  });
-
-  return server;
+	const mjmlStrict = options.mjmlStrict || false;
+	return {
+		log,
+		htmlFormat,
+		mjmlStrict,
+	}
 };
 
-module.exports = createRenderServer;
+// eslint-disable-next-line max-statements
+const getRenderer = (template, type, comps, options) => {
+	const {htmlComponents, textComponents} = comps;
+	const {htmlFormat, mjmlRenderOptions, mjmlStrict, log} = options;
+
+	switch (type) {
+		case HTML:
+			const prepareRender = (i) => {
+				const rendered = mjml(i, mjmlRenderOptions);
+				if (mjmlStrict && rendered.errors.length > 0) {
+					// Intentionally logging both
+					const message = `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`;
+					log(WARN, message);
+					console.warn(message);
+				}
+				return htmlFormat(rendered.html);
+			};
+			return {
+				components : htmlComponents,
+				prepareRender,
+				contentType : TEXT_HTML,
+			};
+		case MJML:
+			return {
+				components : htmlComponents,
+				prepareRender : (e) => pretty(e, {ocd : true}),
+				contentType : TEXT_PLAIN,
+			};
+		case TXT:
+			return {
+				components : textComponents,
+				prepareRender : html2text,
+				contentType : TEXT_PLAIN,
+			};
+		default:
+			throw new InternalError(`Type ${type} was accepted but not handled!`);
+	}
+};
+
+const createRenderServer = (htmlComponents, textComponents, options) => {
+	const {log, htmlFormat, mjmlStrict} = getOptions(options);
+
+	const mjmlRenderOptions = mjmlStrict ? {level : 'strict'} : {};
+
+	const createMail = (template, type, data, response) => {
+		if (!ALLOWED_TYPES.includes(type)) {
+			log(WARN, `Requested type ${type} could not be handled for template ${template}`);
+			response.status('400').end();
+			return;
+		}
+
+		try {
+			const {components, prepareRender, contentType} = getRenderer(template, type, {
+				htmlComponents,
+				textComponents
+			}, {htmlFormat, mjmlRenderOptions, mjmlStrict, log});
+
+			let reactTemplate;
+			try {
+				reactTemplate = getBaseComponent(components, template);
+			} catch (e) {
+				log(WARN, `Template ${template} does not exist for requested type ${type}`);
+				response.status(404).end();
+				return;
+			}
+			response.set(CONTENT_TYPE, contentType).send(prepareRender(renderReact(reactTemplate, data))).end();
+			log(INFO, `Rendered template ${template} for type ${type}`);
+		} catch (e) {
+			const message = e instanceof InternalError ? e.message :
+				`Error occurred while rendering ${template}.${type}. This is usually because of an invalid template. See the server logs for more information`;
+			response.status(500).end(message);
+			log(ERROR, e.message);
+		}
+	};
+
+	const server = express();
+
+	server.use(bodyParser.json({limit : '1mb'}));
+	server.use(bodyParser.urlencoded({limit : '1mb', extended : true}));
+
+	server.get('/favicon.ico', (request, response) => response.status('404').end());
+
+	server.get('/:template.:type', (req, res) => createMail(req.params.template, req.params.type, req.query, res));
+	server.post('/:template.:type', (req, res) => {
+		const data = req.body;
+		Object.keys(req.query).forEach(value => {
+			if (data[value]) {
+				log(WARN, `Body property '${value}' was overwritten by query param.`);
+			}
+			data[value] = req.query[value];
+		});
+		createMail(req.params.template, req.params.type, data, res)
+	});
+
+	return server;
+};
+
+export default createRenderServer;

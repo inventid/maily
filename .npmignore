@@ -1,8 +1,13 @@
-src
-test
-README.md
-example
-example-dist
-example.js
 .idea
+src
+build/tests
+build/example
+example
+tests
+.babelrc
+.eslintignore
+.eslintrc
+.gitignore
+.nvmrc
+README.md
 

@@ -1,17 +1,17 @@
-const PropTypes = require('prop-types');
-const React = require('react');
+import PropTypes from 'prop-types';
+import React from 'react';
 
-const FullWidthSection = require('./fullWidthSection');
-const Text = require('./text');
-const Envelope = require('./envelope');
+import FullWidthSection from './fullWidthSection';
+import Text from './text';
+import Envelope from './envelope';
 
-class UpdateMail extends React.Component {
-    static propTypes = {
+export default class UpdateMail extends React.Component {
+	static propTypes = {
 		name : PropTypes.string.isRequired,
 		body : PropTypes.string.isRequired
 	};
 
-    render() {
+	render() {
 		return (
 			<Envelope name={this.props.name}>
 				<FullWidthSection>
@@ -26,5 +26,3 @@ class UpdateMail extends React.Component {
 		);
 	}
 }
-
-module.exports = UpdateMail;
