@@ -1,14 +1,10 @@
-if (!global._babelPolyfill) {
-	require('babel-polyfill');
-}
-
 import express from 'express';
 import bodyParser from 'body-parser';
 import striptags from 'striptags';
 import mjml from 'mjml';
 import React from 'react';
 import pretty from 'pretty';
-import {minify} from 'html-minifier';
+import { minify } from 'html-minifier';
 import ReactDOMServer from 'react-dom/server';
 
 const HTML = 'html';
@@ -24,14 +20,13 @@ const INFO = 'info';
 const WARN = 'warning';
 const ERROR = 'error';
 
-class InternalError extends Error {};
+class InternalError extends Error {}
 
 const getBaseComponent = (components, component) => {
 	if (component in components) {
 		return components[component];
-	} else {
-		throw new InternalError(`No component defined with name ${component}`);
 	}
+	throw new InternalError(`No component defined with name ${component}`);
 };
 
 const renderReact = (component, data) => {
@@ -39,26 +34,25 @@ const renderReact = (component, data) => {
 	return ReactDOMServer.renderToStaticMarkup(rootElemComponent);
 };
 
-const html2text = (html) => {
-	return striptags(html.replace(/<br\s*\/?>/g, "\n"))
-		.split("\n")
-		.map(l => l.trim())
-		.join("\n");
-};
+const html2text = html => striptags(html.replace(/<br\s*\/?>/g, '\n'))
+	.split('\n')
+	.map(l => l.trim())
+	.join('\n');
 
+// eslint-disable-next-line no-console
 const defaultLogger = (level, message) => console.log(`${new Date()} ${level}: ${message}`);
 
-const getOptions = options => {
+const getOptions = (options) => {
 	let log = defaultLogger;
 	if (typeof options === 'function') {
 		// TODO remove in v6
-		log(WARN, "Deprecation notice: A logger was passed instead of an options object. The logger should be on the `log` key of the options object instead.");
+		log(WARN, 'Deprecation notice: A logger was passed instead of an options object. The logger should be on the `log` key of the options object instead.');
 		log = options;
 	} else if (options.logger) {
 		log = options.logger;
 	}
 
-	let htmlFormat = input => pretty(input, {ocd : true});
+	let htmlFormat = input => pretty(input, { ocd: true });
 	if (options.minificationOptions && typeof options.minificationOptions === 'object') {
 		htmlFormat = input => minify(input, options.minificationOptions);
 	}
@@ -68,42 +62,44 @@ const getOptions = options => {
 		log,
 		htmlFormat,
 		mjmlStrict,
-	}
+	};
 };
 
 // eslint-disable-next-line max-statements
 const getRenderer = (template, type, comps, options) => {
-	const {htmlComponents, textComponents} = comps;
-	const {htmlFormat, mjmlRenderOptions, mjmlStrict, log} = options;
+	const { htmlComponents, textComponents } = comps;
+	const {
+		htmlFormat, mjmlRenderOptions, mjmlStrict, log,
+	} = options;
 
 	switch (type) {
 		case HTML:
-			const prepareRender = (i) => {
-				const rendered = mjml(i, mjmlRenderOptions);
-				if (mjmlStrict && rendered.errors.length > 0) {
-					// Intentionally logging both
-					const message = `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`;
-					log(WARN, message);
-					console.warn(message);
-				}
-				return htmlFormat(rendered.html);
-			};
 			return {
-				components : htmlComponents,
-				prepareRender,
-				contentType : TEXT_HTML,
+				components: htmlComponents,
+				prepareRender: (i) => {
+					const rendered = mjml(i, mjmlRenderOptions);
+					if (mjmlStrict && rendered.errors.length > 0) {
+						// Intentionally logging both
+						const message = `MJML validation errors encountered in template '${template}': ${rendered.errors.map(e => JSON.stringify(e)).join('\n')}`;
+						log(WARN, message);
+						// eslint-disable-next-line no-console
+						console.warn(message);
+					}
+					return htmlFormat(rendered.html);
+				},
+				contentType: TEXT_HTML,
 			};
 		case MJML:
 			return {
-				components : htmlComponents,
-				prepareRender : (e) => pretty(e, {ocd : true}),
-				contentType : TEXT_PLAIN,
+				components: htmlComponents,
+				prepareRender: e => pretty(e, { ocd: true }),
+				contentType: TEXT_PLAIN,
 			};
 		case TXT:
 			return {
-				components : textComponents,
-				prepareRender : html2text,
-				contentType : TEXT_PLAIN,
+				components: textComponents,
+				prepareRender: html2text,
+				contentType: TEXT_PLAIN,
 			};
 		default:
 			throw new InternalError(`Type ${type} was accepted but not handled!`);
@@ -111,9 +107,9 @@ const getRenderer = (template, type, comps, options) => {
 };
 
 const createRenderServer = (htmlComponents, textComponents, options) => {
-	const {log, htmlFormat, mjmlStrict} = getOptions(options);
+	const { log, htmlFormat, mjmlStrict } = getOptions(options);
 
-	const mjmlRenderOptions = mjmlStrict ? {level : 'strict'} : {};
+	const mjmlRenderOptions = mjmlStrict ? { level: 'strict' } : {};
 
 	const createMail = (template, type, data, response) => {
 		if (!ALLOWED_TYPES.includes(type)) {
@@ -123,10 +119,12 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
 		}
 
 		try {
-			const {components, prepareRender, contentType} = getRenderer(template, type, {
+			const { components, prepareRender, contentType } = getRenderer(template, type, {
 				htmlComponents,
-				textComponents
-			}, {htmlFormat, mjmlRenderOptions, mjmlStrict, log});
+				textComponents,
+			}, {
+				htmlFormat, mjmlRenderOptions, mjmlStrict, log,
+			});
 
 			let reactTemplate;
 			try {
@@ -139,8 +137,8 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
 			response.set(CONTENT_TYPE, contentType).send(prepareRender(renderReact(reactTemplate, data))).end();
 			log(INFO, `Rendered template ${template} for type ${type}`);
 		} catch (e) {
-			const message = e instanceof InternalError ? e.message :
-				`Error occurred while rendering ${template}.${type}. This is usually because of an invalid template. See the server logs for more information`;
+			const message = e instanceof InternalError ? e.message
+				: `Error occurred while rendering ${template}.${type}. This is usually because of an invalid template. See the server logs for more information`;
 			response.status(500).end(message);
 			log(ERROR, e.message);
 		}
@@ -148,21 +146,21 @@ const createRenderServer = (htmlComponents, textComponents, options) => {
 
 	const server = express();
 
-	server.use(bodyParser.json({limit : '1mb'}));
-	server.use(bodyParser.urlencoded({limit : '1mb', extended : true}));
+	server.use(bodyParser.json({ limit: '1mb' }));
+	server.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 
 	server.get('/favicon.ico', (request, response) => response.status('404').end());
 
 	server.get('/:template.:type', (req, res) => createMail(req.params.template, req.params.type, req.query, res));
 	server.post('/:template.:type', (req, res) => {
 		const data = req.body;
-		Object.keys(req.query).forEach(value => {
+		Object.keys(req.query).forEach((value) => {
 			if (data[value]) {
 				log(WARN, `Body property '${value}' was overwritten by query param.`);
 			}
 			data[value] = req.query[value];
 		});
-		createMail(req.params.template, req.params.type, data, res)
+		createMail(req.params.template, req.params.type, data, res);
 	});
 
 	return server;

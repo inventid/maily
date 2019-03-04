@@ -8,7 +8,7 @@ export default class MjmlButton extends React.Component {
 					<mj-section>
 						<mj-column>
 							<mj-button font-family="Helvetica" background-color="#f45e43" color="white">
-								Don't click me!
+								{'Don\'t click me!'}
 							</mj-button>
 						</mj-column>
 					</mj-section>

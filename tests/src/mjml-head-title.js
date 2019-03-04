@@ -11,7 +11,7 @@ export default class MjmlHeadStyle extends React.Component {
 					<mj-section>
 						<mj-column>
 							<mj-text>
-								Hello World!
+								{'Hello World!'}
 							</mj-text>
 						</mj-column>
 					</mj-section>

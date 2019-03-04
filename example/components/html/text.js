@@ -5,29 +5,32 @@ import style from '../../style';
 
 export default class Text extends React.Component {
 	static propTypes = {
-		size : PropTypes.string,
-		style : PropTypes.string,
-		align : PropTypes.string,
-		paddingTop : PropTypes.string,
-		color : PropTypes.string
+		align: PropTypes.string,
+		paddingTop: PropTypes.string,
+		color: PropTypes.string,
+		children: PropTypes.node.isRequired,
 	};
 
 	static defaultProps = {
-		size : 'medium',
-		style : 'normal',
-		align : 'left',
-		paddingTop : `${style.distance}px`,
-		color : style.colors.black
+		align: 'left',
+		paddingTop: `${style.distance}px`,
+		color: style.colors.black,
 	};
 
 	render() {
+		const {
+			paddingTop, color, align, children,
+		} = this.props;
 		return (
-			<mj-text padding-top={this.props.paddingTop}
-			         padding-bottom={`${style.distance}px`}
-			         color={this.props.color}
-			         line-height="21px"
-			         align={this.props.align}>
-				{this.props.children}
-			</mj-text>);
+			<mj-text
+				padding-top={paddingTop}
+				padding-bottom={`${style.distance}px`}
+				color={color}
+				line-height="21px"
+				align={align}
+			>
+				{children}
+			</mj-text>
+		);
 	}
 }

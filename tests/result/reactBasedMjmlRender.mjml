@@ -4,7 +4,7 @@
       <mj-column>
         <mj-image align="center" border="none" padding-bottom="30px" padding="10px 25px" src="http://5vph.mj.am/img/5vph/b/1g86w/0g67t.png" target="_blank" title="" width="180px"></mj-image>
         <mj-text align="left" color="#55575d" font-family="Arial, sans-serif" font-size="13px" line-height="22px" padding-bottom="0px" padding-top="0px" padding="10px 25px">
-          <p style="line-height:18px;margin:10px,0;text-align:center;font-size:14px;color:#fff;font-family:&#x27;Times New Roman&#x27;,Helvetica,Arial,sans-serif">WOMEN       |       MEN       |       KIDS</p>
+          <p style="line-height:18px;margin:10px,0;text-align:center;font-size:14px;color:#fff;font-family:&#x27;Times New Roman&#x27;,Helvetica,Arial,sans-serif">WOMEN | MEN | KIDS</p>
         </mj-text>
       </mj-column>
     </mj-section>
@@ -27,7 +27,7 @@
       <mj-column>
         <mj-button background-color="#ffffff" border-radius="3px" font-family="Times New Roman, Helvetica, Arial, sans-serif" font-size="18px" font-weight="normal" inner-padding="10px 25px" padding-bottom="30px" padding="10px 25px"><span style="color:#212020">Shop Now</span></mj-button>
         <mj-text align="left" color="#55575d" font-family="Arial, sans-serif" font-size="13px" line-height="22px" padding-bottom="0px" padding-top="5px" padding="10px 25px">
-          <p>* Offer valid on Allura purchases on 17/29/11 at 11:59 pm. No price adjustments on previous <br /><span>purchases, offer limited to stock. Cannot be combined with any offer or promotion other than free.</span></p>
+          <p>* Offer valid on Allura purchases on 17/29/11 at 11:59 pm. No price adjustments on previous purchases, offer limited to stock. Cannot be combined with any offer or promotion other than free.</p>
         </mj-text>
       </mj-column>
     </mj-section>

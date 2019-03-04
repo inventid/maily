@@ -8,7 +8,7 @@ export default class MjmlSpacer extends React.Component {
 					<mj-section>
 						<mj-column>
 							<mj-text>A first line of text</mj-text>
-							<mj-spacer height="50px"/>
+							<mj-spacer height="50px" />
 							<mj-text>A second line of text</mj-text>
 						</mj-column>
 					</mj-section>

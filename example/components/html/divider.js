@@ -11,7 +11,8 @@ export default class Divider extends React.Component {
 				padding-left={`${style.distance}px`}
 				padding-right={`${style.distance}px`}
 				border-width="1px"
-				border-color={style.colors.secondary}/>
+				border-color={style.colors.secondary}
+			/>
 		);
 	}
 }

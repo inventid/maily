@@ -5,13 +5,13 @@ export default class MjmlHeadBreakpoint extends React.Component {
 		return (
 			<mjml>
 				<mj-head>
-					<mj-breakpoint width="320px"/>
+					<mj-breakpoint width="320px" />
 				</mj-head>
 				<mj-body>
 					<mj-section>
 						<mj-column>
 							<mj-text>
-								Hello World!
+								{'Hello World!'}
 							</mj-text>
 						</mj-column>
 					</mj-section>

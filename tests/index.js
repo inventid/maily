@@ -1,12 +1,12 @@
 import fetch from 'node-fetch';
 import fs from 'fs';
-import createRenderServer from '../src';
-import htmlComponents from './src';
 import DiffMatchPatch from 'diff-match-patch';
 import color from 'cli-color';
+import createRenderServer from '../src';
+import htmlComponents from './src';
 import plain from './src/plain_text';
 
-const textComponents = {plain};
+const textComponents = { plain };
 
 const dir = `${__dirname}/result`;
 const port = process.env.PORT || 3000;
@@ -16,19 +16,19 @@ const logger = (level, message) => {
 		// Drop these in tests
 		return;
 	}
-	console.log(JSON.stringify({level, message, datetime : (new Date()).toISOString()}));
+	console.log(JSON.stringify({ level, message, datetime: (new Date()).toISOString() }));
 };
 
 const cliColors = {
-	'-1' : color.greenBright,
-	'0' : x => x,
-	'1' : color.redBright,
+	'-1': color.greenBright,
+	0: x => x,
+	1: color.redBright,
 };
 
 const WRITE_MODE = process.argv[2] === '--update';
 const dmp = new DiffMatchPatch();
 const fileOptions = {
-	encoding : 'utf8',
+	encoding: 'utf8',
 };
 const compare = async (template, path, result) => {
 	if (WRITE_MODE) {
@@ -40,7 +40,7 @@ const compare = async (template, path, result) => {
 			console.log(color.red(`\n\nMismatch in ${template}. The following diff was generated:`));
 
 			const diff = dmp.diff_main(expectation, result, false);
-			for (let i = 0; i < diff.length; i++) {
+			for (let i = 0; i < diff.length; i += 1) {
 				let [type, text] = diff[i];
 				if (text === '\n') {
 					text = '<NEW_LINE>';
@@ -66,19 +66,19 @@ const onReady = async () => {
 		}
 	});
 
-	for (let i = 0; i < htmlTemplates.length; i++) {
+	for (let i = 0; i < htmlTemplates.length; i += 1) {
 		const template = htmlTemplates[i];
 		const result = await fetch(`http://localhost:${port}/${template}.html`).then(x => x.text());
 		const path = `${dir}/${template}.html`;
 		await compare(template, path, result);
 	}
-	for (let i = 0; i < htmlTemplates.length; i++) {
+	for (let i = 0; i < htmlTemplates.length; i += 1) {
 		const template = htmlTemplates[i];
 		const result = await fetch(`http://localhost:${port}/${template}.mjml`).then(x => x.text());
 		const path = `${dir}/${template}.mjml`;
 		await compare(template, path, result);
 	}
-	for (let i = 0; i < textTemplates.length; i++) {
+	for (let i = 0; i < textTemplates.length; i += 1) {
 		const template = textTemplates[i];
 		const result = await fetch(`http://localhost:${port}/${template}.txt`).then(x => x.text());
 		const path = `${dir}/${template}.txt`;
@@ -92,7 +92,7 @@ const onReady = async () => {
 	if (notFoundStatus !== 404) {
 		// Should not exist
 		console.error(color.redBright(`Non existing template did not return a 404, got ${notFoundStatus} instead`));
-		process.exit(1)
+		process.exit(1);
 	}
 
 	// No such template
@@ -100,7 +100,7 @@ const onReady = async () => {
 	if (brokenStatus !== 500) {
 		// Should have thrown
 		console.error(color.redBright(`Broken template did not return a 500, got ${brokenStatus} instead`));
-		process.exit(1)
+		process.exit(1);
 	}
 
 	// No such type
@@ -108,7 +108,7 @@ const onReady = async () => {
 	if (typeStatus !== 400) {
 		// Should have thrown
 		console.error(color.redBright(`Unknown type did not return a 400, got ${typeStatus} instead`));
-		process.exit(1)
+		process.exit(1);
 	}
 
 	server.close();
@@ -122,8 +122,8 @@ const onReady = async () => {
 
 const options = {
 	logger,
-	mjmlStrict : true,
+	mjmlStrict: true,
 	// Uses the exact same format as those for HTMLMinifier https://www.npmjs.com/package/html-minifier
-	minificationOptions : {}
+	minificationOptions: {},
 };
 server = createRenderServer(htmlComponents, textComponents, options).listen(port, onReady);

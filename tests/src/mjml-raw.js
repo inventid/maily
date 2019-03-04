@@ -6,7 +6,7 @@ export default class MjmlRaw extends React.Component {
 			<mjml>
 				<mj-body>
 					<mj-raw>
-						This is my raw content
+						{'This is my raw content'}
 					</mj-raw>
 				</mj-body>
 			</mjml>

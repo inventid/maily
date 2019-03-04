@@ -6,18 +6,30 @@ export default class MjmlWrapper extends React.Component {
 			<mjml>
 				<mj-body>
 					<mj-wrapper border="1px solid #000000" padding="50px 30px">
-						<mj-section border-top="1px solid #aaaaaa" border-left="1px solid #aaaaaa"
-						            border-right="1px solid #aaaaaa" padding="20px">
+						<mj-section
+							border-top="1px solid #aaaaaa"
+							border-left="1px solid #aaaaaa"
+							border-right="1px solid #aaaaaa"
+							padding="20px"
+						>
 							<mj-column>
-								<mj-image padding="0" src="https://placeholdit.imgix.net/~text?&w=350&h=150"/>
+								<mj-image padding="0" src="https://placeholdit.imgix.net/~text?&w=350&h=150" />
 							</mj-column>
 						</mj-section>
-						<mj-section border-left="1px solid #aaaaaa" border-right="1px solid #aaaaaa" padding="20px"
-						            border-bottom="1px solid #aaaaaa">
+						<mj-section
+							border-left="1px solid #aaaaaa"
+							border-right="1px solid #aaaaaa"
+							padding="20px"
+							border-bottom="1px solid #aaaaaa"
+						>
 							<mj-column border="1px solid #dddddd">
 								<mj-text padding="20px"> First line of text</mj-text>
-								<mj-divider border-width="1px" border-style="dashed" border-color="lightgrey"
-								            padding="0 20px"/>
+								<mj-divider
+									border-width="1px"
+									border-style="dashed"
+									border-color="lightgrey"
+									padding="0 20px"
+								/>
 								<mj-text padding="20px"> Second line of text</mj-text>
 							</mj-column>
 						</mj-section>

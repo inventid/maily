@@ -6,7 +6,7 @@ export default class MjmlHeadStyle extends React.Component {
 			<mjml>
 				<mj-head>
 					<mj-attributes>
-						<mj-class name="mjclass" color="green" font-size="30px"/>
+						<mj-class name="mjclass" color="green" font-size="30px" />
 					</mj-attributes>
 					<mj-style inline="inline">
 						{`.blue-text div {
