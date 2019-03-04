@@ -8,7 +8,6 @@ import plain from './src/plain_text';
 
 const textComponents = { plain };
 
-// eslint-disable no-console
 const dir = `${__dirname}/result`;
 const port = process.env.PORT || 3000;
 
@@ -42,7 +41,6 @@ const compare = async (template, path, result) => {
 
 			const diff = dmp.diff_main(expectation, result, false);
 			for (let i = 0; i < diff.length; i += 1) {
-				// eslint-disable-next-line prefer-const
 				let [type, text] = diff[i];
 				if (text === '\n') {
 					text = '<NEW_LINE>';

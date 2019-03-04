@@ -92,7 +92,11 @@ module.exports = {
     "react/no-multi-comp": 0,
     "no-await-in-loop": 0,
     "react/no-unescaped-entities": 0,
-    "react/jsx-no-target-blank": 0
+    "react/jsx-no-target-blank": 0,
+    "prefer-const": ["error", {
+      "destructuring": "all",
+      "ignoreReadBeforeAssign": true,
+    }]
   },
   "overrides": [
     {
@@ -104,4 +108,4 @@ module.exports = {
       }
     }
   ]
-}
+};
