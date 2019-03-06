@@ -46,7 +46,7 @@ const getOptions = (options) => {
 	let log = defaultLogger;
 	if (typeof options === 'function') {
 		// TODO remove in v6
-		log(WARN, 'Deprecation notice: A logger was passed instead of an options object. The logger should be on the `log` key of the options object instead.');
+		log(WARN, 'Deprecation notice: A logger was passed instead of an options object. The logger should be on the `logger` key of the options object instead.');
 		log = options;
 	} else if (options.logger) {
 		log = options.logger;
