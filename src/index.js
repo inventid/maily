@@ -6,6 +6,7 @@ import React from 'react';
 import pretty from 'pretty';
 import { minify } from 'html-minifier';
 import ReactDOMServer from 'react-dom/server';
+import { AllHtmlEntities } from 'html-entities';
 
 const HTML = 'html';
 const TXT = 'txt';
@@ -19,6 +20,8 @@ const CONTENT_TYPE = 'Content-Type';
 const INFO = 'info';
 const WARN = 'warning';
 const ERROR = 'error';
+
+const htmlEntities = new AllHtmlEntities();
 
 class InternalError extends Error {}
 
@@ -34,10 +37,16 @@ const renderReact = (component, data) => {
 	return ReactDOMServer.renderToStaticMarkup(rootElemComponent);
 };
 
-const html2text = html => striptags(html.replace(/<br\s*\/?>/g, '\n'))
-	.split('\n')
-	.map(l => l.trim())
-	.join('\n');
+const html2text = (html) => {
+	const newLinesHtml = html.replace(/<br\s*\/?>/g, '\n');
+	const strippedHtml = striptags(newLinesHtml)
+		.split('\n')
+		.map(l => l.trim())
+		.join('\n');
+
+	// And to prevent html entities in the TXT version of the email
+	return htmlEntities.decode(strippedHtml);
+};
 
 // eslint-disable-next-line no-console
 const defaultLogger = (level, message) => console.log(`${new Date()} ${level}: ${message}`);
