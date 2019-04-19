@@ -1,0 +1,1 @@
+This is a very plain email with some % "special" characters

@@ -5,8 +5,9 @@ import color from 'cli-color';
 import createRenderServer from '../src';
 import htmlComponents from './src';
 import plain from './src/plain_text';
+import htmlEntities from './src/htmlEntities';
 
-const textComponents = { plain };
+const textComponents = { plain, htmlEntities };
 
 const dir = `${__dirname}/result`;
 const port = process.env.PORT || 3000;
