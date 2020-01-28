@@ -5,7 +5,7 @@ if (!global._babelPolyfill) {
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const html_strip = require('htmlstrip-native');
+const striptags = require('striptags');
 const mjml = require('mjml');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
@@ -35,12 +35,10 @@ const renderReact = (component, data) => {
 };
 
 const html2text = (html) => {
-  return html_strip.html_strip(html.replace(/<br\s*\/?>/g, "\n"), {
-    include_script: false,
-    include_style: false,
-    compact_whitespace: false,
-    include_attributes: {'alt': false}
-  }).split("\n").map(l => l.trim()).join("\n");
+  return striptags(html.replace(/<br\s*\/?>/g, "\n"))
+      .split("\n")
+      .map(l => l.trim())
+      .join("\n");
 };
 
 const defaultLogger = (level, message) => console.log(`${new Date()} ${level}: ${message}`);
